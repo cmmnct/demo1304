@@ -1,0 +1,6 @@
+
+<div *ngIf="patches$" class="thumbbox">
+    <app-colorpatch *ngFor="let item of patches$ | async" [patch]="item" (edit)="onClickEdit($event)" (delete)="onClickDelete($event)"></app-colorpatch>
+    <app-colorpatch [patch]="patchTemplate" (add)="onClickEdit(patchTemplate)"></app-colorpatch>
+</div>
+<app-editpatch *ngIf="editState" [patch]="editPatch" (update)="onUpdatePatch($event)"></app-editpatch>

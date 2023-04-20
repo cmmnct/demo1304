@@ -1,0 +1,31 @@
+.thumb {
+    width: 64px;
+    height: 64px;
+    border: 1px solid grey;
+}
+.editWidget {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.editWidget > div {
+    width: 300px;
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255, 255, 255);
+}
+
+.editWidget > div >div {
+    padding:30px;
+}
+
+input{
+    display: block;
+    margin: 10px;
+}

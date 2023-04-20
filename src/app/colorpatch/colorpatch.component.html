@@ -1,0 +1,13 @@
+<div [title]="patch.name" [style.backgroundColor]="patch.rgba" class="thumb">
+    <!-- attribute binding: we binden de waarde van attributes van een DOM element aan properties van de class colorpatch-->
+    {{patch.name | uppercase}}<br>
+    <ng-container *ngIf="patch.name">
+        <button (click)="onClickEdit()">E</button>
+        <!-- event binding: we binden het click event van dit DOM element aan een method van de class colorpatch -->
+        <button (click)="onClickDelete()">X</button>
+    </ng-container>
+    <ng-container *ngIf="!patch.name">
+        <button (click)="onClickAdd()">+</button>
+    </ng-container>
+
+</div>

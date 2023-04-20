@@ -1,0 +1,14 @@
+<div class="editWidget">
+    <div *ngIf="patchTemplate">
+        <div [style.backgroundColor]="patchTemplate.rgba">
+            <input type="range" class="colorslider" min="0" max="255" [(ngModel)]="patchTemplate.r">
+            <input type="range" class="colorslider" min="0" max="255" [(ngModel)]="patchTemplate.g">
+            <input type="range" class="colorslider" min="0" max="255" [(ngModel)]="patchTemplate.b">
+            <input type="range" class="colorslider" min="0" max="1" step="0.01" [(ngModel)]="patchTemplate.a">
+            <input type="text" [(ngModel)]="patchTemplate.name" required>
+            <input type="button" value="save" (click)="onClickSave()">
+        </div>
+
+
+    </div>
+</div>

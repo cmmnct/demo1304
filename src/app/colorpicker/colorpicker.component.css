@@ -1,0 +1,11 @@
+
+.thumbbox{
+    border: 1px solid grey;
+    display: flex;
+    padding: 20px;
+}
+.thumb {
+    width: 64px;
+    height: 64px;
+    border: 1px solid grey;
+}

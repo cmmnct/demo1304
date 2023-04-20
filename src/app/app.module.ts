@@ -1,16 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ColorpickerComponent } from './colorpicker/colorpicker.component';
+import { ColorpatchComponent } from './colorpatch/colorpatch.component';
+import { EditpatchComponent } from './editpatch/editpatch.component';
+import { HelloWorldComponent } from './hello-world/hello-world.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ColorpickerComponent,
+    ColorpatchComponent,
+    EditpatchComponent,
+    HelloWorldComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
