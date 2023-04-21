@@ -31,8 +31,7 @@ export class ColorpickerComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.patches$ = this.patchesService.getColorPatches()
-    this.patchesService.getColorPatches().subscribe(patches => console.log(patches));
-
+    this.patchesService.init();
   }
 
   ngOnChanges() {

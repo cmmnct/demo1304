@@ -8,14 +8,18 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PatchesService {
   http = inject(HttpClient);
-
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
   patches: ColorPatch[] = [];
 
-  patches$: BehaviorSubject<ColorPatch[]> = new BehaviorSubject(this.patches);
-  remotePatches$: Observable<ColorPatch[]>;
+  private patches$: BehaviorSubject<ColorPatch[]> = new BehaviorSubject(
+    this.patches
+  );
+
   myUrl: string = 'http://localhost:3000/patches';
 
-  constructor() {this.remotePatches$ = this.http
+  constructor() {}
+  public init(): void {
+    this.http
       .get<ColorPatch[]>(this.myUrl)
       .pipe(
         map((patches) =>
@@ -31,23 +35,48 @@ export class PatchesService {
               )
           )
         )
-    );}
+      )
+      .subscribe((patches) => {
+        this.patches = patches;
+        this.patches$.next(patches);
+      });
+  }
 
   getColorPatches(): Observable<ColorPatch[]> {
-    
-    return this.remotePatches$;
+    return this.patches$;
   }
 
   createColorPatch(patch: ColorPatch) {
-    alert('create: ' + patch.name);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http.post(this.myUrl, structuredClone(patch), { headers: headers }).pipe().subscribe(result => console.log(result))
+    let newPatchObject = toObject(patch);
+    this.http
+      .post(this.myUrl, newPatchObject, { headers: this.headers })
+      .subscribe((result) => {
+        toObject(patch);
+        this.patches.push(patch);
+        this.patches$.next(this.patches);
+      });
   }
   updateColorPatch(patch: ColorPatch) {
-    // api call
+    const myIndex = this.patches.indexOf(patch);
+    this.http.patch(`${this.myUrl}/${patch.id}`, patch);
   }
+  
   deleteColorPatch(patch: ColorPatch) {
     const myIndex = this.patches.indexOf(patch);
-    this.patches.splice(myIndex, 1);
+    this.http.delete(`${this.myUrl}/${patch.id}`).subscribe((result) => {
+      this.patches.splice(myIndex, 1);
+      this.patches$.next(this.patches);
+    });
   }
+}
+
+export function toObject(object: any): object {
+  type Output = { [key: string]: string };
+  const returnValue: Output = {};
+  Object.keys(object).forEach((key, index) => {
+    if (key !== '_id') {
+      returnValue[key.slice(1, key.length)] = object[key];
+    }
+  });
+  return returnValue;
 }
