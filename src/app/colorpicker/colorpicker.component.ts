@@ -21,16 +21,14 @@ export class ColorpickerComponent implements OnInit, OnChanges {
   patchTemplate: ColorPatch = new ColorPatch(0, 0, 0, 0.5, '');
   editPatch?: ColorPatch;
 
-  patches$?:Observable<ColorPatch[]>;
-  
+  patches$?: Observable<ColorPatch[]>;
 
   patchesService = inject(PatchesService);
 
   constructor() {}
 
   ngOnInit(): void {
-
-    this.patches$ = this.patchesService.getColorPatches()
+    this.patches$ = this.patchesService.getColorPatches();
     this.patchesService.init();
   }
 
@@ -41,24 +39,23 @@ export class ColorpickerComponent implements OnInit, OnChanges {
   onClickEdit(patch: ColorPatch) {
     if (!this.editState) {
       this.editPatch = patch;
-    this.editState = true;
-    this.patchesService.updateColorPatch(patch);
+      this.editState = true;
+      this.patchesService.updateColorPatch(patch);
     }
   }
 
   onUpdatePatch(patch: ColorPatch) {
     this.editState = false;
     if (patch === this.patchTemplate) {
-         this.patchesService.createColorPatch(patch);
-         this.patchTemplate = new ColorPatch(0, 0, 0, 1, '');
+      this.patchesService.createColorPatch(patch);
+      this.patchTemplate = new ColorPatch(0, 0, 0, 1, '');
     }
   }
 
   onClickDelete(patch: ColorPatch) {
     if (this.editState) return;
-    if (confirm("Do you really want to delete " + patch.name + "?") ) {
+    if (confirm('Do you really want to delete ' + patch.name + '?')) {
       this.patchesService.deleteColorPatch(patch);
     }
-
   }
 }

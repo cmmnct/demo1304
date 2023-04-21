@@ -50,15 +50,24 @@ export class PatchesService {
     let newPatchObject = toObject(patch);
     this.http
       .post(this.myUrl, newPatchObject, { headers: this.headers })
-      .subscribe((result) => {
-        toObject(patch);
+      .subscribe(() => {
         this.patches.push(patch);
         this.patches$.next(this.patches);
       });
   }
   updateColorPatch(patch: ColorPatch) {
     const myIndex = this.patches.indexOf(patch);
-    this.http.patch(`${this.myUrl}/${patch.id}`, patch);
+    let newPatchObject = toObject(patch);
+    console.log(newPatchObject);
+    this.http
+      .patch(`${this.myUrl}/${patch.id}`, newPatchObject, {
+        headers: this.headers,
+      })
+      .subscribe(() => {
+
+        this.patches.push(patch);
+        this.patches$.next(this.patches);
+      });
   }
   
   deleteColorPatch(patch: ColorPatch) {

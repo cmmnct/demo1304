@@ -7,7 +7,7 @@ import { ColorPatch } from '../models/colorpatch';
   styleUrls: ['./colorpatch.component.css'],
 })
 export class ColorpatchComponent implements OnInit {
-  @Input() patch: ColorPatch = new ColorPatch(0, 0, 0, 1, '');
+  @Input() patch: ColorPatch = new ColorPatch(0, 0, 0, 0.5, '');
 
   @Output() edit: EventEmitter<ColorPatch> = new EventEmitter();
   @Output() delete: EventEmitter<ColorPatch> = new EventEmitter();
