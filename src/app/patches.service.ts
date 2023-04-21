@@ -10,7 +10,7 @@ export class PatchesService {
   http = inject(HttpClient);
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   patches: ColorPatch[] = [];
-  #patches = signal(4);
+
 
   patches$: BehaviorSubject<ColorPatch[]> = new BehaviorSubject(this.patches);
   // remotePatches$: Observable<ColorPatch[]>;
