@@ -11,17 +11,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ColorpickerComponent implements OnInit, OnChanges {
-  r: number = 255;
-  g: number = 0;
-  b: number = 0;
-  a: number = 1;
-  name: string = 'black';
+  
   editState: boolean = false;
 
   patchTemplate: ColorPatch = new ColorPatch(0, 0, 0, 0.5, '');
   editPatch?: ColorPatch;
 
-  patches$?:Observable<ColorPatch[]>;
+  patches$?:BehaviorSubject<ColorPatch[]>;
   
 
   patchesService = inject(PatchesService);
@@ -31,7 +27,7 @@ export class ColorpickerComponent implements OnInit, OnChanges {
   ngOnInit(): void {
 
     this.patches$ = this.patchesService.getColorPatches()
-    this.patchesService.getColorPatches().subscribe(patches => console.log(patches));
+    this.patchesService.getColorPatches().asObservable().subscribe(patches => console.log(patches));
 
   }
 

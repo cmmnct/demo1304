@@ -8,14 +8,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class PatchesService {
   http = inject(HttpClient);
-
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
   patches: ColorPatch[] = [];
+  #patches = signal(4);
 
   patches$: BehaviorSubject<ColorPatch[]> = new BehaviorSubject(this.patches);
-  remotePatches$: Observable<ColorPatch[]>;
+  // remotePatches$: Observable<ColorPatch[]>;
   myUrl: string = 'http://localhost:3000/patches';
 
-  constructor() {this.remotePatches$ = this.http
+  constructor() {
+    this.http
       .get<ColorPatch[]>(this.myUrl)
       .pipe(
         map((patches) =>
@@ -31,17 +33,27 @@ export class PatchesService {
               )
           )
         )
-    );}
+      )
+      .subscribe((patches) => (this.patches = patches));
+  }
 
-  getColorPatches(): Observable<ColorPatch[]> {
+  getColorPatches(): BehaviorSubject<ColorPatch[]> {
     
-    return this.remotePatches$;
+    return this.patches$;
   }
 
   createColorPatch(patch: ColorPatch) {
-    alert('create: ' + patch.name);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-    this.http.post(this.myUrl, structuredClone(patch), { headers: headers }).pipe().subscribe(result => console.log(result))
+    let newPatch = {
+      r: patch.r,
+      g: patch.g,
+      b: patch.b,
+      a: patch.a,
+      name: patch.name,
+    };
+    this.http
+      .post(this.myUrl, newPatch, { headers: this.headers })
+      .pipe()
+      .subscribe((result) => console.log(result));
   }
   updateColorPatch(patch: ColorPatch) {
     // api call
@@ -51,3 +63,4 @@ export class PatchesService {
     this.patches.splice(myIndex, 1);
   }
 }
+
